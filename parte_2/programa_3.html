@@ -1,0 +1,69 @@
+<meta charset="utf-8">
+<canvas width="600" height="400"></canvas>
+<br>
+Escolha um tipo de cor <br>
+<input type="color">
+<script>
+
+		var tela = document.querySelector("canvas");
+		var pincel = tela.getContext("2d");
+		var cores = document.querySelector("input")
+
+		pincel.fillStyle = "grey";
+		pincel.fillRect(0,0,600,400)
+		posicaoCores = 0
+			
+		var desenha = false;
+
+		function desenhaCirculo(evento) {//função com o objetivo de funcionar como o pincel, é nela que será capturado o movimento do mouse e a criação do desenho
+			
+			var x = evento.pageX - tela.offsetLeft;
+			var y = event.pageY - tela.offsetTop;
+			
+			if(desenha) {
+
+				pincel.fillStyle = cores.value	;
+				pincel.beginPath();
+				pincel.arc(x, y, 10, 0, 2 * 3.14);
+				pincel.fill();
+
+			}
+
+		
+		}
+
+		tela.onmousemove = desenhaCirculo;
+
+		function habilitarDesenhar() {
+
+			desenha = true;
+		}		
+
+		function desabilitarDesenhar() {
+
+			desenha = false;
+		}
+
+		
+		tela.onmousedown = habilitarDesenhar;
+		
+		tela.onmouseup = desabilitarDesenhar;
+
+
+
+		function mudaCor(){
+
+			posicaoCores++;[]
+			
+			if(posicaoCores >= cores.length){
+
+				posicaoCores = 0 //retornar para que o contador não continue infinitamente
+			}
+
+			alert("Cor atual: " + cores[posicaoCores])
+			return false; //serve para não exibir o menu do canvas quando clicar com o botão direito do mouse
+		}
+
+		
+		tela.oncontextmenu = mudaCor;
+</script>
